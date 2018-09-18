@@ -81,3 +81,11 @@ deploy:
   type: git
   repo: https://github.com/zonghaishang/zonghaishang.github.io.git
   branch: master
+
+# Admin
+admin:
+    name: yiji
+    password: yiji
+    secret: hey hexo
+    expire: 60*1
+    # cors: http://localhost:3000
