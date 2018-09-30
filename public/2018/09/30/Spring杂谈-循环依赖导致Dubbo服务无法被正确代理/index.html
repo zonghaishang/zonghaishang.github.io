@@ -10,8 +10,8 @@
 
     <!--Description-->
     
-        <meta name="description" content="商宗海 | 资深开发工程师 | 男 | 硕士 | 杭州 | yiji@apache.org资深开发工程师，1991年11月出生，居住在浙江省杭州市，Dubbo核心开发者之一，主要从事中间件Dubbo框架开发，长期活跃在Dubbo社区。
-E-mail：yiji@apache.orgGithub:  h">
+        <meta name="description" content="背景在阿里重启开源之前，基于dubbo注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个Dubbo服务使用aop不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，Dubbo服务暴露是拿不到代理，所以就导致不生效了。
+为了简化背景，业务方同学对外暴露controller接收htt">
     
 
     <!--Author-->
@@ -21,7 +21,7 @@ E-mail：yiji@apache.orgGithub:  h">
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="诣极的工作经历"/>
+        <meta property="og:title" content="Spring杂谈-循环依赖导致Dubbo服务无法被正确代理"/>
     
 
     <!--Open Graph Description-->
@@ -43,7 +43,7 @@ E-mail：yiji@apache.orgGithub:  h">
 
     <!-- Title -->
     
-    <title>诣极的工作经历 - Hexo</title>
+    <title>Spring杂谈-循环依赖导致Dubbo服务无法被正确代理 - Hexo</title>
 
     <!-- Tachyons Core CSS -->
     <link rel="stylesheet" href="//unpkg.com/tachyons/css/tachyons.min.css">
@@ -117,8 +117,8 @@ E-mail：yiji@apache.orgGithub:  h">
     <!-- Title -->
     <div class="w-100 mw8 center vh-40 dt">
         <div class="dtc v-mid white">
-            <h1 class="f1-l f2-m tc tc-m tl-ns">诣极的工作经历</h1>
-            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2018-09-18</p>
+            <h1 class="f1-l f2-m tc tc-m tl-ns">Spring杂谈-循环依赖导致Dubbo服务无法被正确代理</h1>
+            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2018-09-30</p>
         </div>
     </div>
 
@@ -136,41 +136,30 @@ E-mail：yiji@apache.orgGithub:  h">
                 <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
                     <!-- Tags Vertical -->
                     
-                        <div class="tags-container-vertical">
-                            <div class="tags-sub-container">
-                                <a class="fw3 ph1 dib" href="/tags/工作经历/">#工作经历</a>
-                            </div>
-                        </div>
-                    
 
                     <!-- Main Post Content -->
-                    <h2 id="商宗海-资深开发工程师-男-硕士-杭州-yiji-apache-org"><a href="#商宗海-资深开发工程师-男-硕士-杭州-yiji-apache-org" class="headerlink" title="商宗海 | 资深开发工程师 | 男 | 硕士 | 杭州 | yiji@apache.org"></a>商宗海 | 资深开发工程师 | 男 | 硕士 | 杭州 | <a href="mailto:yiji@apache.org" target="_blank" rel="noopener">yiji@apache.org</a></h2><p>资深开发工程师，1991年11月出生，居住在浙江省杭州市，Dubbo核心开发者之一，主要从事中间件Dubbo框架开发，长期活跃在Dubbo社区。</p>
-<p><code>E-mail</code>：<a href="mailto:yiji@apache.org" target="_blank" rel="noopener">yiji@apache.org</a><br><code>Github</code>:  <a href="https://github.com/zonghaishang/">https://github.com/zonghaishang/</a><br><code>Website</code>: <a href="https://zonghaishang.github.io/" target="_blank" rel="noopener">https://zonghaishang.github.io/</a></p>
-<h2 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h2><ul>
-<li><p>服务端:<br>1.擅长Dubbo中间件开发，深入理解其特性和原理。<br>2.熟练使用 Java，理解Java 集合、并发和锁，并深入理解其特性和原理。<br>3.熟悉 JVM 虚拟机和字 节码指令、多线程、NIO 和 Netty。<br>4.熟读主流开源框架 Spring/Dubbo/Hessian/Fastjson 源码并理解原理，熟悉设计模式。<br>5.熟悉微服务开发技术(Docker/Zookeeper/Mesos/Marathon) 。</p>
-</li>
-<li><p>前端：<br>  1.熟练使用 JavaScript 语言编程;熟悉 HTML+CSS。<br>  2.熟悉 jQuery、D3.js、CodeMirror 和 Bootstrap 等主流前端框架或类库的实际项目经验。</p>
-</li>
-</ul>
-<h2 id="项目及工作经历"><a href="#项目及工作经历" class="headerlink" title="项目及工作经历"></a>项目及工作经历</h2><h3 id="2018年1月—至今（有赞-云框架）"><a href="#2018年1月—至今（有赞-云框架）" class="headerlink" title="2018年1月—至今（有赞-云框架）"></a>2018年1月—至今（有赞-云框架）</h3><p>Dubbo框架Owner, 负责框架迭代和性能优化，电商云项目底层技术支撑, 线上疑难问题排查等答疑。 </p>
+                    <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在阿里重启开源之前，基于dubbo注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个Dubbo服务使用aop不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，Dubbo服务暴露是拿不到代理，所以就导致不生效了。</p>
+<p>为了简化背景，业务方同学对外暴露controller接收http请求，在controller依赖<code>DeliveryOperateService</code>，在<code>DeliveryOperateService</code>依赖<code>CancelDistOrderProcessor</code>，在<code>CancelDistOrderProcessor</code>又依赖了<code>DeliveryOperateService</code>，这里大家应该发现循环依赖了，这种场景在开源版本<code>dubbo 2.5.8</code>之前是无法正确处理的。</p>
 <ul>
-<li>项目职责和工作成果:<br>1.Dubbo-http2协议、Etcd3注册中心、单元化、服务注解、Maven 插件等设计和开发。<br>2.解决线上优雅停机、平滑升级、Hessian2序列化等遗留问题。<br>3.负责团队招聘，内部技术分享。<br>4.参与开源 Dubbo 框架贡献。github: <a href="https://github.com/zonghaishang">https://github.com/zonghaishang</a> 。</li>
+<li>Controller</li>
 </ul>
-<h3 id="2017年5月—2018年1月-阿里巴巴-财税技术"><a href="#2017年5月—2018年1月-阿里巴巴-财税技术" class="headerlink" title="2017年5月—2018年1月 (阿里巴巴-财税技术)"></a>2017年5月—2018年1月 (阿里巴巴-财税技术)</h3><p>税务平台是阿里内部使用的系统，支持线上开具电子发票，支持海外发票(俄罗斯)业务进军国际化领 域。TP 计算平台业务是阿里集团内部合理降低税务开支开发的系统，用来调节公司利润率和定价转移。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/trade-dc/operate&quot;)</span><br><span class="line">public class DeliveryOperateController &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 <ul>
-<li>项目职责和工作成果:<br>1.完成海外电子发票接入详细设计、编码、项目进度推进和1c 系统部署落地。<br>2.完成 TP 详细设计和开发，外包管理和线上问题分析处理。<br>3.完成双十一限流方案的设计和开发，税务系统、协同、财务首页等系统维护工作。</li>
+<li>DeliveryOperateService</li>
 </ul>
-<h3 id="2014年12月—2017年3月-金蝶-架构组"><a href="#2014年12月—2017年3月-金蝶-架构组" class="headerlink" title="2014年12月—2017年3月 (金蝶-架构组)"></a>2014年12月—2017年3月 (金蝶-架构组)</h3><p>金蝶下一代云 ERP 是基于金蝶统一云平台的 Saas 化企业管理服务。系统后台采用微服务架构，提供脚 本引擎、配置服务、缓存、容器和 SDK 等服务，采用开源 RPC 框架 Dubbo，Docker 容器等一系列技术保证 服务可以弹性二级扩容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@com.alibaba.dubbo.config.annotation.Service(protocol = &#123;&quot;dubbo&quot;&#125;, registry = &#123;&quot;haunt&quot;&#125;)</span><br><span class="line">public class DeliveryOperateServiceImpl implements DeliveryOperateService &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private CancelDistOrderProcessor cancelDistOrderProcessor;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 <ul>
-<li>项目职责和工作成果:<br>1.Dubbo框架扩展，提供 JSON 上下文解析器和配置中心开发。<br>2.采用 Netty开发图片服务器，支持金蝶云图片上传和预览。<br>3.开发云平台脚本调试功能, 提供单步调试、方法返回、查看变量、调用堆栈和控制台。<br>4.开发邮件服务组件，支持金蝶邮件服务器和腾讯邮箱发送服务，目前用于扩容通知。<br>5.开发监控组件，提供小部件实时监控图、柱状图和折线图等等，支持自适应。<br>6.优化 ERP 会计审计接口导出问题，修复引发金蝶集群实例宕机严重问题。<br>7.开发附件支持高拍仪设备上传，附件上传安全验证拦截校验功能。</li>
+<li>CancelDistOrderProcessor</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class CancelDistOrderProcessor implements IComponent &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>在正常情况下，如果使用aop在dubbo暴露服务时会传递正确的spring动态代理后的对象:</p>
+<p><img src="https://github.com/zonghaishang/images/1538291854892.png" alt="image"></p>
+<p>Dubbo服务暴露实际持有的对象是代理后的对象。但是因为循环依赖Dubbo无法正确处理实际持有<code>DeliveryOperateService</code>非代理的实例。</p>
+<p>我们来看下为什么这种场景Dubbo无法处理？</p>
+<p>Dubbo无法正确处理循环依赖aop代理.png<img src="https://github.com/zonghaishang/images/1538293549011.png" alt="image"></p>
 
                     
                     <!-- Tags Bottom -->
-                    
-                        <div class="tags-container-bottom">
-                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/工作经历/">#工作经历</a>
-                        </div>
                     
 
                     <!-- Comments -->
@@ -198,18 +187,6 @@ E-mail：yiji@apache.orgGithub:  h">
                     <hr class="dn-l mw4 black-50 mt5" />
                     
                     <!-- Widget 2: Categories -->
-                    
-                        <div class="mt5 tc tl-l">
-    <h3>Categories</h3>
-    
-        <p>
-            <a href="/categories/工作经历/">工作经历</a>
-        </p>
-    
-</div>
-
-
-                        <hr class="dn-l mw4 black-50 mt5" />
                     
 
                     <!-- Widget 3: Recent Posts -->
