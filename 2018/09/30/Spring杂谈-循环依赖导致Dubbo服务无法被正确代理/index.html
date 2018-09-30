@@ -10,7 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="背景在阿里重启开源之前，基于dubbo注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个Dubbo服务使用aop不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，Dubbo服务暴露是拿不到代理，所以就导致不生效了。
+        <meta name="description" content="背景在阿里重启开源之前，基于dubbo注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个dubbo服务使用aop不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，dubbo服务暴露是拿不到代理，所以就导致不生效了。
 为了简化背景，业务方同学对外暴露controller接收htt">
     
 
@@ -136,30 +136,56 @@
                 <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
                     <!-- Tags Vertical -->
                     
+                        <div class="tags-container-vertical">
+                            <div class="tags-sub-container">
+                                <a class="fw3 ph1 dib" href="/tags/Spring杂谈/">#Spring杂谈</a>
+                            </div>
+                        </div>
+                    
 
                     <!-- Main Post Content -->
-                    <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在阿里重启开源之前，基于dubbo注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个Dubbo服务使用aop不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，Dubbo服务暴露是拿不到代理，所以就导致不生效了。</p>
-<p>为了简化背景，业务方同学对外暴露controller接收http请求，在controller依赖<code>DeliveryOperateService</code>，在<code>DeliveryOperateService</code>依赖<code>CancelDistOrderProcessor</code>，在<code>CancelDistOrderProcessor</code>又依赖了<code>DeliveryOperateService</code>，这里大家应该发现循环依赖了，这种场景在开源版本<code>dubbo 2.5.8</code>之前是无法正确处理的。</p>
-<ul>
-<li>Controller</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/trade-dc/operate&quot;)</span><br><span class="line">public class DeliveryOperateController &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>DeliveryOperateService</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@com.alibaba.dubbo.config.annotation.Service(protocol = &#123;&quot;dubbo&quot;&#125;, registry = &#123;&quot;haunt&quot;&#125;)</span><br><span class="line">public class DeliveryOperateServiceImpl implements DeliveryOperateService &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private CancelDistOrderProcessor cancelDistOrderProcessor;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>CancelDistOrderProcessor</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class CancelDistOrderProcessor implements IComponent &#123;</span><br><span class="line"></span><br><span class="line">  @Resource</span><br><span class="line">  private DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+                    <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在阿里重启开源之前，基于<code>dubbo</code>注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个<code>dubbo</code>服务使用<code>aop</code>不生效的问题，最后分析发现是在使用aop场景下如果接口包含循环依赖，<code>dubbo</code>服务暴露是拿不到代理，所以就导致不生效了。</p>
+<p>为了简化背景，业务方同学对外暴露<code>controller</code>接收<code>http</code>请求, 依赖关系：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Controller </span><br><span class="line">	-&gt; DeliveryOperateService </span><br><span class="line">		-&gt; CancelDistOrderProcessor </span><br><span class="line">			-&gt; DeliveryOperateService</span><br></pre></td></tr></table></figure>
+<p>这里大家应该发现循环依赖了, <code>DeliveryOperateService</code>是应用了aop拦截，这种场景在开源版本<code>dubbo 2.5.8</code>之前是无法正确处理的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Controller</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/trade-dc/operate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeliveryOperateController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line">  <span class="keyword">private</span> DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// DeliveryOperateService</span></span><br><span class="line"><span class="meta">@com</span>.alibaba.dubbo.config.annotation.Service(protocol = &#123;<span class="string">"dubbo"</span>&#125;, registry = &#123;<span class="string">"haunt"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeliveryOperateServiceImpl</span> <span class="keyword">implements</span> <span class="title">DeliveryOperateService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line">  <span class="keyword">private</span> CancelDistOrderProcessor cancelDistOrderProcessor;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CancelDistOrderProcessor</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CancelDistOrderProcessor</span> <span class="keyword">implements</span> <span class="title">IComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line">  <span class="keyword">private</span> DeliveryOperateService deliveryOperateService;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在正常情况下，如果使用aop在dubbo暴露服务时会传递正确的spring动态代理后的对象:</p>
 <p><img src="https://zonghaishang.github.io/images/1538291854892.png" alt="image"></p>
-<p>Dubbo服务暴露实际持有的对象是代理后的对象。但是因为循环依赖Dubbo无法正确处理实际持有<code>DeliveryOperateService</code>非代理的实例。</p>
-<p>我们来看下为什么这种场景Dubbo无法处理？</p>
-<p>Dubbo无法正确处理循环依赖aop代理.png<img src="https://zonghaishang.github.io/images/1538293549011.png" alt="image"></p>
+<p><code>Dubbo</code>服务暴露实际持有的对象是代理后的对象。但是因为循环依赖Dubbo无法正确处理实际持有<code>DeliveryOperateService</code>非代理的实例。</p>
+<h3 id="我们来看下为什么这种场景Dubbo无法处理？"><a href="#我们来看下为什么这种场景Dubbo无法处理？" class="headerlink" title="我们来看下为什么这种场景Dubbo无法处理？"></a>我们来看下为什么这种场景<code>Dubbo</code>无法处理？</h3><p><img src="https://zonghaishang.github.io/images/1538293549011.png" alt="image"></p>
+<h3 id="Step1-Spring启动初始化Controller-对属性进行注入"><a href="#Step1-Spring启动初始化Controller-对属性进行注入" class="headerlink" title="Step1, Spring启动初始化Controller, 对属性进行注入"></a>Step1, <code>Spring</code>启动初始化<code>Controller</code>, 对属性进行注入</h3><h3 id="Step2-Controller触发DeliveryOperateService创建实例"><a href="#Step2-Controller触发DeliveryOperateService创建实例" class="headerlink" title="Step2, Controller触发DeliveryOperateService创建实例"></a>Step2, <code>Controller</code>触发<code>DeliveryOperateService</code>创建实例</h3><p><img src="https://zonghaishang.github.io/images/1538296119277.png" alt="image"></p>
+<p>第一次依赖注入就会触发bean的实例化并且保存在<code>exposedObject</code>中，，注意，这里是非代理对象。</p>
+<h3 id="Step3-DeliveryOperateService依赖CancelDistOrderProcessor并触发它初始化"><a href="#Step3-DeliveryOperateService依赖CancelDistOrderProcessor并触发它初始化" class="headerlink" title="Step3, DeliveryOperateService依赖CancelDistOrderProcessor并触发它初始化"></a>Step3, <code>DeliveryOperateService</code>依赖<code>CancelDistOrderProcessor</code>并触发它初始化</h3><p><img src="https://zonghaishang.github.io/images/1538296756913.png" alt="image"></p>
+<p>这里也没什么特殊的，在<code>populateBean</code>会触发循环依赖<code>DeliveryOperateService</code>加载，这时候<code>earlySingletonExposure</code>值为true, 代表bean提前暴露。</p>
+<h3 id="Step4-在前一步触发，DeliveryOperateService其实会创建动态代理"><a href="#Step4-在前一步触发，DeliveryOperateService其实会创建动态代理" class="headerlink" title="Step4, 在前一步触发，DeliveryOperateService其实会创建动态代理"></a>Step4, 在前一步触发，<code>DeliveryOperateService</code>其实会创建动态代理</h3><p><img src="https://zonghaishang.github.io/images/1538297025076.png" alt="image"></p>
+<p>循环引用会导致提前暴露<code>earlySingletonExposure=true</code>，这个时候加载的是<code>getEarlyBeanReference</code>，在里面创建spring动态代理：</p>
+<p><img src="https://zonghaishang.github.io/images/1538297199420.png" alt="image"></p>
+<p><img src="https://zonghaishang.github.io/images/1538297380747.png" alt="image"></p>
+<p>到此，<code>DeliveryOperateService</code>确实会创建，并且会用在<code>CancelDistOrderProcessor</code>对应注入的字段中。</p>
+<h3 id="Step6-触发Dubbo服务暴露的实例不是代理"><a href="#Step6-触发Dubbo服务暴露的实例不是代理" class="headerlink" title="Step6, 触发Dubbo服务暴露的实例不是代理"></a>Step6, 触发Dubbo服务暴露的实例不是代理</h3><p>因为在<code>CancelDistOrderProcessor</code>中已经触发了代理，所以第<code>Step1</code>中的实例不会再创建代理了。</p>
+<p><img src="https://zonghaishang.github.io/images/1538297510399.png" alt="image"></p>
+<p><img src="https://zonghaishang.github.io/images/1538297678652.png" alt="image"></p>
+<p>在代码<code>555</code>会触发<code>dubbo AnnotationBean</code>进行服务暴露，但是这个不是代理实例了，但是为什么spring还是正确返回代理后的实例呢？</p>
+<p><img src="https://zonghaishang.github.io/images/1538297855578.png" alt="image"></p>
+<p>因为循环引用触发<code>earlySingletonExposure=true</code>, 并且在前面已经生成过动态代理了，可以直接在<code>getSingleton</code>拿到动态代理的返回了。</p>
+<p>好了，基本原因已经分析的够清楚了，我觉的有2点注意事项：</p>
+<ul>
+<li><code>dubbo</code>原来注解实现声明周期没搞清楚</li>
+<li><code>spring</code>如果能提前判断循环引用获取<code>exposedObject</code>也没问题</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (earlySingletonExposure) &#123;</span><br><span class="line">    Object earlySingletonReference = getSingleton(beanName, <span class="keyword">false</span>);</span><br><span class="line">	<span class="keyword">if</span> (earlySingletonReference != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (exposedObject == bean) &#123;</span><br><span class="line">			exposedObject = earlySingletonReference;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p>比如把循环引用逻辑提前到<code>populateBean</code>之前判断一下。</p>
+<h3 id="为什么在开源dubbo-2-5-8版本之后没有这个问题？"><a href="#为什么在开源dubbo-2-5-8版本之后没有这个问题？" class="headerlink" title="为什么在开源dubbo 2.5.8版本之后没有这个问题？"></a>为什么在开源<code>dubbo 2.5.8</code>版本之后没有这个问题？</h3><p>重写后的注解实现，我深入研究过，新版本实现不会错误的提前使用没有代理的bean，关键代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// ServiceAnnotationBeanPostProcessor</span><br><span class="line">@Override</span><br><span class="line">public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException &#123;</span><br><span class="line"></span><br><span class="line">	Set&lt;String&gt; resolvedPackagesToScan = resolvePackagesToScan(packagesToScan);</span><br><span class="line"></span><br><span class="line">	if (!CollectionUtils.isEmpty(resolvedPackagesToScan)) &#123;</span><br><span class="line">		registerServiceBeans(resolvedPackagesToScan, registry);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		 if (logger.isWarnEnabled()) &#123;</span><br><span class="line">				 logger.warn(&quot;packagesToScan is empty , ServiceBean registry will be ignored!&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ServiceAnnotationBeanPostProcessor</code> 实现<code>BeanDefinitionRegistryPostProcessor</code>接口，会在所有<code>spring bean</code>真正初始化前完成<code>dubbo</code>服务的注册，整个生命周期中不会触碰到代理前的对象。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我其实平时不太习惯写文章，但是发现分析后的问题记录下来可以让更多同学收益。</p>
 
                     
                     <!-- Tags Bottom -->
+                    
+                        <div class="tags-container-bottom">
+                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/Spring杂谈/">#Spring杂谈</a>
+                        </div>
                     
 
                     <!-- Comments -->
@@ -187,6 +213,18 @@
                     <hr class="dn-l mw4 black-50 mt5" />
                     
                     <!-- Widget 2: Categories -->
+                    
+                        <div class="mt5 tc tl-l">
+    <h3>Categories</h3>
+    
+        <p>
+            <a href="/categories/Spring杂谈/">Spring杂谈</a>
+        </p>
+    
+</div>
+
+
+                        <hr class="dn-l mw4 black-50 mt5" />
                     
 
                     <!-- Widget 3: Recent Posts -->
