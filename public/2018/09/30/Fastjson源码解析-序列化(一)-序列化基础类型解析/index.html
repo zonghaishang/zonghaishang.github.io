@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="概要fastjson核心功能包括序列化和反序列化，序列化的含义是将java对象转换成跨语言的json字符串。我认为从这里作为分析入口相对比较简单，第二章会从反序列化角度切入，会包含词法分析等较为复杂点展开。
+现在，我们正式开始咀嚼原汁原味的代码吧，我添加了详细的代码注释。
+SerializeWrit">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Fastjson源码解析-序列化(一)-序列化基础类型解析"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Hexo"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Fastjson源码解析-序列化(一)-序列化基础类型解析 - Hexo</title>
+
+    <!-- Tachyons Core CSS -->
+    <link rel="stylesheet" href="//unpkg.com/tachyons/css/tachyons.min.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<!-- Main Content -->
+<!-- Banner -->
+<!-- Banner -->
+<div class="w-100 bg-1 ph5-ns ph3 text-light">
+    
+    <nav class="db dt-l w-100 mw8 center border-box pv3">
+        <a class="db dtc-l v-mid link dim w-100 w-25-l tc tl-l mb2 mb0-l white" href="/" title="Hexo">
+            <img src="/logo.svg" class="dib h3" alt="Hexo">
+        </a>
+        <div class="db dtc-l v-mid w-100 w-75-l tc tr-l">
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/" 
+                    title="首页">
+                    首页
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/tags" 
+                    title="标签">
+                    标签
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/categories" 
+                    title="分类">
+                    分类
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/archives" 
+                    title="归档">
+                    归档
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="https://github.com/zonghaishang" 
+                    title="联系">
+                    联系
+                </a>
+            
+        </div>
+    </nav>
+
+    <!-- Title -->
+    <div class="w-100 mw8 center vh-40 dt">
+        <div class="dtc v-mid white">
+            <h1 class="f1-l f2-m tc tc-m tl-ns">Fastjson源码解析-序列化(一)-序列化基础类型解析</h1>
+            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2018-09-30</p>
+        </div>
+    </div>
+
+    <!-- Icon -->
+    <div class="relative w-100 mw8 center white dn dn-m db-ns">
+        <i class="header-icon fa fa-file-text-o"></i>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="w-100 ph2 ph4-m ph5-l mv5 mv6-l">
+    <div class="content">
+        <div class="mw8 center">
+            <div class="cf">
+                <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
+                    <!-- Tags Vertical -->
+                    
+                        <div class="tags-container-vertical">
+                            <div class="tags-sub-container">
+                                <a class="fw3 ph1 dib" href="/tags/Fastjson源码解析/">#Fastjson源码解析</a>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Main Post Content -->
+                    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>fastjson核心功能包括序列化和反序列化，序列化的含义是将java对象转换成跨语言的json字符串。我认为从这里作为分析入口相对比较简单，第二章会从反序列化角度切入，会包含词法分析等较为复杂点展开。</p>
+<p>现在，我们正式开始咀嚼原汁原味的代码吧，我添加了详细的代码注释。</p>
+<h2 id="SerializeWriter成员变量"><a href="#SerializeWriter成员变量" class="headerlink" title="SerializeWriter成员变量"></a>SerializeWriter成员变量</h2><p><code>com.alibaba.fastjson.serializer.SerializeWriter</code>类非常重要，序列化输出都是通过转换底层操作，重要字段如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 字符类型buffer */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ThreadLocal&lt;<span class="keyword">char</span>[]&gt; bufLocal      = <span class="keyword">new</span> ThreadLocal&lt;<span class="keyword">char</span>[]&gt;();</span><br><span class="line"><span class="comment">/** 字节类型buffer */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ThreadLocal&lt;<span class="keyword">byte</span>[]&gt; bytesBufLocal = <span class="keyword">new</span> ThreadLocal&lt;<span class="keyword">byte</span>[]&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 存储序列化结果buffer */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">char</span>                           buf[];</span><br><span class="line"></span><br><span class="line"><span class="comment">/** buffer中包含的字符数 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span>                            count;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 序列化的特性，比如写枚举按照名字还是枚举值 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span>                            features;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 序列化输出器 */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Writer                     writer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 是否使用单引号输出json */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        useSingleQuotes;</span><br><span class="line"><span class="comment">/** 输出字段是否追加 "和：字符 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        quoteFieldNames;</span><br><span class="line"><span class="comment">/** 是否对字段排序 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        sortField;</span><br><span class="line"><span class="comment">/** 禁用字段循环引用探测 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        disableCircularReferenceDetect;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        beanToArray;</span><br><span class="line"><span class="comment">/** 按照toString方式获取对象字面值 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        writeNonStringValueAsString;</span><br><span class="line"><span class="comment">/** 如果字段默认值不输出，比如原型int，默认值0不输出 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        notWriteDefaultValue;</span><br><span class="line"><span class="comment">/** 序列化枚举时使用枚举name */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        writeEnumUsingName;</span><br><span class="line"><span class="comment">/** 序列化枚举时使用枚举toString值 */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        writeEnumUsingToString;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        writeDirect;</span><br><span class="line"><span class="comment">/** key分隔符，默认单引号是'，双引号是" */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">char</span>                           keySeperator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span>                            maxBufSize = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">boolean</span>                        browserSecure;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">long</span>                           sepcialBits;</span><br></pre></td></tr></table></figure>
+<h2 id="SerializeWriter成员函数"><a href="#SerializeWriter成员函数" class="headerlink" title="SerializeWriter成员函数"></a>SerializeWriter成员函数</h2><h3 id="序列化整形数字"><a href="#序列化整形数字" class="headerlink" title="序列化整形数字"></a>序列化整形数字</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeInt</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 如果是整数最小值，调用字符串函数输出到缓冲区*/</span></span><br><span class="line">    <span class="keyword">if</span> (i == Integer.MIN_VALUE) &#123;</span><br><span class="line">        write(<span class="string">"-2147483648"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 根据数字判断占用的位数，负数会多一位用于存储字符`-` */</span></span><br><span class="line">    <span class="keyword">int</span> size = (i &lt; <span class="number">0</span>) ? IOUtils.stringSize(-i) + <span class="number">1</span> : IOUtils.stringSize(i);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> newcount = count + size;</span><br><span class="line">    <span class="comment">/** 如果当前存储空间不够 */</span></span><br><span class="line">    <span class="keyword">if</span> (newcount &gt; buf.length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (writer == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">/** 扩容到为原有buf容量1.5倍+1, copy原有buf的字符*/</span></span><br><span class="line">            expandCapacity(newcount);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">char</span>[] chars = <span class="keyword">new</span> <span class="keyword">char</span>[size];</span><br><span class="line">            <span class="comment">/** 将整数i转换成单字符并存储到chars数组 */</span></span><br><span class="line">            IOUtils.getChars(i, size, chars);</span><br><span class="line">            <span class="comment">/** 将chars字符数组内容写到buffer中*/</span></span><br><span class="line">            write(chars, <span class="number">0</span>, chars.length);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 如果buffer空间够，直接将字符写到buffer中 */</span></span><br><span class="line">    IOUtils.getChars(i, newcount, buf);</span><br><span class="line">    <span class="comment">/** 重新计数buffer中字符数 */</span></span><br><span class="line">    count = newcount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中值得提一下的是<code>IOUtils.getChars</code>，里面利用了<code>Integer.getChars(int i, int index, char[] buf)</code>,主要的思想是整数超过65536 进行除以100, 循环取出数字后两位，依次将个位和十位转换为单字符，如果整数小于等于65536，进行除以10，取出个位数字并转换单字符，getCharts中 <code>q = (i * 52429) &gt;&gt;&gt; (16+3)</code>，可以理解为 (i乘以0.1), 但是精度更高。</p>
+<h3 id="序列化长整形数字"><a href="#序列化长整形数字" class="headerlink" title="序列化长整形数字"></a>序列化长整形数字</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeLong</span><span class="params">(<span class="keyword">long</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> needQuotationMark = isEnabled(SerializerFeature.BrowserCompatible) <span class="comment">//</span></span><br><span class="line">                                &amp;&amp; (!isEnabled(SerializerFeature.WriteClassName)) <span class="comment">//</span></span><br><span class="line">                                &amp;&amp; (i &gt; <span class="number">9007199254740991L</span> || i &lt; -<span class="number">9007199254740991L</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i == Long.MIN_VALUE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (needQuotationMark) write(<span class="string">"\"-9223372036854775808\""</span>);</span><br><span class="line">        <span class="comment">/** 如果是长整数最小值，调用字符串函数输出到缓冲区*/</span></span><br><span class="line">        <span class="keyword">else</span> write(<span class="string">"-9223372036854775808"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 根据数字判断占用的位数，负数会多一位用于存储字符`-` */</span></span><br><span class="line">    <span class="keyword">int</span> size = (i &lt; <span class="number">0</span>) ? IOUtils.stringSize(-i) + <span class="number">1</span> : IOUtils.stringSize(i);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> newcount = count + size;</span><br><span class="line">    <span class="keyword">if</span> (needQuotationMark) newcount += <span class="number">2</span>;</span><br><span class="line">    <span class="comment">/** 如果当前存储空间不够 */</span></span><br><span class="line">    <span class="keyword">if</span> (newcount &gt; buf.length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (writer == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">/** 扩容到为原有buf容量1.5倍+1, copy原有buf的字符*/</span></span><br><span class="line">            expandCapacity(newcount);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">char</span>[] chars = <span class="keyword">new</span> <span class="keyword">char</span>[size];</span><br><span class="line">            <span class="comment">/** 将长整数i转换成单字符并存储到chars数组 */</span></span><br><span class="line">            IOUtils.getChars(i, size, chars);</span><br><span class="line">            <span class="keyword">if</span> (needQuotationMark) &#123;</span><br><span class="line">                write(<span class="string">'"'</span>);</span><br><span class="line">                write(chars, <span class="number">0</span>, chars.length);</span><br><span class="line">                write(<span class="string">'"'</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                write(chars, <span class="number">0</span>, chars.length);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 添加引号 */</span></span><br><span class="line">    <span class="keyword">if</span> (needQuotationMark) &#123;</span><br><span class="line">        buf[count] = <span class="string">'"'</span>;</span><br><span class="line">        IOUtils.getChars(i, newcount - <span class="number">1</span>, buf);</span><br><span class="line">        buf[newcount - <span class="number">1</span>] = <span class="string">'"'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        IOUtils.getChars(i, newcount, buf);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    count = newcount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>序列化长整型和整型非常类似，增加了双引号判断，采用用了和Integer转换为单字符同样的技巧。</p>
+<h3 id="序列化浮点类型数字"><a href="#序列化浮点类型数字" class="headerlink" title="序列化浮点类型数字"></a>序列化浮点类型数字</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeDouble</span><span class="params">(<span class="keyword">double</span> doubleValue, <span class="keyword">boolean</span> checkWriteClassName)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 如果doubleValue不合法或者是无穷数，调用writeNull */</span></span><br><span class="line">    <span class="keyword">if</span> (Double.isNaN(doubleValue)</span><br><span class="line">            || Double.isInfinite(doubleValue)) &#123;</span><br><span class="line">        writeNull();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/** 将高精度double转换为字符串 */</span></span><br><span class="line">        String doubleText = Double.toString(doubleValue);</span><br><span class="line">        <span class="comment">/** 启动WriteNullNumberAsZero特性，会将结尾.0去除 */</span></span><br><span class="line">        <span class="keyword">if</span> (isEnabled(SerializerFeature.WriteNullNumberAsZero) &amp;&amp; doubleText.endsWith(<span class="string">".0"</span>)) &#123;</span><br><span class="line">            doubleText = doubleText.substring(<span class="number">0</span>, doubleText.length() - <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** 调用字符串输出方法 */</span></span><br><span class="line">        write(doubleText);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** 如果开启序列化WriteClassName特性，输出Double类型 */</span></span><br><span class="line">        <span class="keyword">if</span> (checkWriteClassName &amp;&amp; isEnabled(SerializerFeature.WriteClassName)) &#123;</span><br><span class="line">            write(<span class="string">'D'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeFloat</span><span class="params">(<span class="keyword">float</span> value, <span class="keyword">boolean</span> checkWriteClassName)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 如果value不合法或者是无穷数，调用writeNull */</span></span><br><span class="line">    <span class="keyword">if</span> (Float.isNaN(value) <span class="comment">//</span></span><br><span class="line">            || Float.isInfinite(value)) &#123;</span><br><span class="line">        writeNull();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/** 将高精度float转换为字符串 */</span></span><br><span class="line">        String floatText= Float.toString(value);</span><br><span class="line">        <span class="comment">/** 启动WriteNullNumberAsZero特性，会将结尾.0去除 */</span></span><br><span class="line">        <span class="keyword">if</span> (isEnabled(SerializerFeature.WriteNullNumberAsZero) &amp;&amp; floatText.endsWith(<span class="string">".0"</span>)) &#123;</span><br><span class="line">            floatText = floatText.substring(<span class="number">0</span>, floatText.length() - <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        write(floatText);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** 如果开启序列化WriteClassName特性，输出float类型 */</span></span><br><span class="line">        <span class="keyword">if</span> (checkWriteClassName &amp;&amp; isEnabled(SerializerFeature.WriteClassName)) &#123;</span><br><span class="line">            write(<span class="string">'F'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>序列化浮点类型的基本思路是先转换为字符串，然后在输出到输出流中。</p>
+<h3 id="序列化枚举类型"><a href="#序列化枚举类型" class="headerlink" title="序列化枚举类型"></a>序列化枚举类型</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeEnum</span><span class="params">(Enum&lt;?&gt; value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">/** 如果枚举value为空，调用writeNull输出 */</span></span><br><span class="line">        writeNull();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String strVal = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">/** 如果开启序列化输出枚举名字作为属性值 */</span></span><br><span class="line">    <span class="keyword">if</span> (writeEnumUsingName &amp;&amp; !writeEnumUsingToString) &#123;</span><br><span class="line">        strVal = value.name();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (writeEnumUsingToString) &#123;</span><br><span class="line">        <span class="comment">/** 采用枚举默认toString方法作为属性值 */</span></span><br><span class="line">        strVal = value.toString();;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (strVal != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">/** 如果开启引号特性，输出json包含引号的字符串 */</span></span><br><span class="line">        <span class="keyword">char</span> quote = isEnabled(SerializerFeature.UseSingleQuotes) ? <span class="string">'\''</span> : <span class="string">'"'</span>;</span><br><span class="line">        write(quote);</span><br><span class="line">        write(strVal);</span><br><span class="line">        write(quote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/** 输出枚举所在的索引号 */</span></span><br><span class="line">        writeInt(value.ordinal());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="序列化单字符"><a href="#序列化单字符" class="headerlink" title="序列化单字符"></a>序列化单字符</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> newcount = count + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/** 如果当前存储空间不够 */</span></span><br><span class="line">    <span class="keyword">if</span> (newcount &gt; buf.length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (writer == <span class="keyword">null</span>) &#123;</span><br><span class="line">            expandCapacity(newcount);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/** 强制流输出并刷新缓冲区 */</span></span><br><span class="line">            flush();</span><br><span class="line">            newcount = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/** 存储单字符到buffer并更新计数 */</span></span><br><span class="line">    buf[count] = (<span class="keyword">char</span>) c;</span><br><span class="line">    count = newcount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="序列化Null"><a href="#序列化Null" class="headerlink" title="序列化Null"></a>序列化Null</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 调用输出字符串null */</span></span><br><span class="line">    write(<span class="string">"null"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="序列化Boolean"><a href="#序列化Boolean" class="headerlink" title="序列化Boolean"></a>序列化Boolean</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">boolean</span> value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value) &#123;</span><br><span class="line">        <span class="comment">/** 输出true字符串 */</span></span><br><span class="line">        write(<span class="string">"true"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/** 输出false字符串 */</span></span><br><span class="line">        write(<span class="string">"false"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                    
+                    <!-- Tags Bottom -->
+                    
+                        <div class="tags-container-bottom">
+                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/Fastjson源码解析/">#Fastjson源码解析</a>
+                        </div>
+                    
+
+                    <!-- Comments -->
+                    
+
+
+
+                </div>
+                <div class="fl w-100 w-30-l center fw3 lh-copy pl4-ns tl black-50">
+                    
+                    <hr class="dn-l mw4 black-50 mt5" />
+                    
+                    <!-- Widget 1: About -->
+                    <div class="mt5 mt0-l">
+    <article class="dt db-l mw8 mw8-m mw5-ns center ml0-l bg-white mv3">
+        <div class="dn dtc-m db-l v-mid tc pr4 pr0-l" style="min-width: 6rem;">
+            <img src="/yiji.jpeg" class="mb4-l br-100 h3 w3 h4-l w4-l dib" title="John Doe">
+        </div>
+        <div class="dtc db-l v-mid lh-copy measure center f6 black-50 tj">
+            github: https://github.com/zonghaishang
+        </div>
+    </article>
+</div>
+
+                    <hr class="dn-l mw4 black-50 mt5" />
+                    
+                    <!-- Widget 2: Categories -->
+                    
+                        <div class="mt5 tc tl-l">
+    <h3>Categories</h3>
+    
+        <p>
+            <a href="/categories/Fastjson源码解析/">Fastjson源码解析</a>
+        </p>
+    
+</div>
+
+
+                        <hr class="dn-l mw4 black-50 mt5" />
+                    
+
+                    <!-- Widget 3: Recent Posts -->
+                    <div class="mt5 tc tl-l">
+    <h3>Recent Posts</h3>
+    
+        <p>
+            <a href="/2018/09/30/Fastjson源码解析-序列化-二-序列化字节和字符串解析/">Fastjson源码解析-序列化(二)-序列化字节和字符串解析</a>
+        </p>
+    
+        <p>
+            <a href="/2018/09/30/Fastjson源码解析-反序列化-二-内部注册反序列化解析/">Fastjson源码解析-反序列化(二)-内部注册反序列化解析</a>
+        </p>
+    
+        <p>
+            <a href="/2018/09/30/Fastjson源码解析-序列化-五-json内部注册序列化解析/">Fastjson源码解析-序列化(五)-json内部注册序列化解析</a>
+        </p>
+    
+        <p>
+            <a href="/2018/09/30/Fastjson源码解析-序列化-四-json序列化实现解析/">Fastjson源码解析-序列化(四)-json序列化实现解析</a>
+        </p>
+    
+        <p>
+            <a href="/2018/09/30/Fastjson源码解析-词法和语法解析-一-token定义解析实现解析/">Fastjson源码解析-词法和语法解析(一)-token定义解析</a>
+        </p>
+    
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<div class="bg-1 ph2 ph5-ns pv5">
+        <div class="mv8">
+            <div class="center tc">
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://twitter.com/yiji_dubbo" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://www.facebook.com/" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://github.com/zonghaishang" target="_blank">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://plus.google.com/" target="_blank">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://www.behance.net/" target="_blank">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://500px.com/" target="_blank">
+                            <i class="fa fa-500px"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="mailto:yiji@apache.org" target="_blank">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="/#" target="_blank">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </div>
+                
+            </div>
+            <div class="f6 f5-ns center tc white pt5 fw3">
+                @Untitled. All right reserved | Design & Hexo <a class="link dim white" href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+            </div>
+        </div>
+    </div>
+
+<!-- After Footer -->
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
