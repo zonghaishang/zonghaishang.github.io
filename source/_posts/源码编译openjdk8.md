@@ -2,6 +2,7 @@
 title: 源码编译openjdk8
 tags: [OpenJDK]
 categories: [openjdk]
+icon: fa fa-cog
 date: 2018-09-30 22:53:30
 ---
 
