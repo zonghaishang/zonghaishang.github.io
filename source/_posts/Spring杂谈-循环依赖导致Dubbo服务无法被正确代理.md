@@ -124,7 +124,7 @@ if (earlySingletonExposure) {
 
 ### 为什么在开源`dubbo 2.5.8`版本之后没有这个问题？
 
-重写后的注解实现，我深入研究过，新版本实现不会错误的提前使用没有代理的bean，关键代码：
+重写后的注解实现，我深入研究过，新版本实现不会提前使用没有代理的bean，关键代码：
 
 ```
 // ServiceAnnotationBeanPostProcessor
