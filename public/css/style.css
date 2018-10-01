@@ -55,6 +55,9 @@ body {
 .post-content>*:first-child {
     margin-top: 0;
 }
+.pretty {
+  border-radius: 20px;
+}
 .content a,
 .content .fake-link {
   text-decoration: none;

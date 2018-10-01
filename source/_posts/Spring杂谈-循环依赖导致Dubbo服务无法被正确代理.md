@@ -57,39 +57,39 @@ public class CancelDistOrderProcessor implements IComponent {
 
 在正常情况下，如果使用aop在dubbo暴露服务时会传递正确的spring动态代理后的对象:
 
-![image](https://zonghaishang.github.io/images/1538291854892.png)
+<img src="https://zonghaishang.github.io/images/1538291854892.png" class="pretty">
 
-`Dubbo`服务暴露实际持有的对象是代理后的对象。但是因为循环依赖Dubbo无法正确处理实际持有`DeliveryOperateService`非代理的实例。
+`Dubbo`服务暴露实际持有的对象是代理后的对象。但是因为循环依赖Dubbo提前拿到`DeliveryOperateService`非代理的实例。
 
 ### 我们来看下为什么这种场景`Dubbo`无法处理？
 
-![image](https://zonghaishang.github.io/images/1538293549011.png)
+<img src="https://zonghaishang.github.io/images/1538293549011.png" class="pretty">
 
 ### Step1, `Spring`启动初始化`Controller`, 对属性进行注入
 
 ### Step2, `Controller`触发`DeliveryOperateService`创建实例
 
-![image](https://zonghaishang.github.io/images/1538296119277.png)
+<img src="https://zonghaishang.github.io/images/1538296119277.png" class="pretty">
 
 第一次依赖注入就会触发bean的实例化并且保存在`exposedObject`中，，注意，这里是非代理对象。
 
 ### Step3, `DeliveryOperateService`依赖`CancelDistOrderProcessor`并触发它初始化
 
-![image](https://zonghaishang.github.io/images/1538296756913.png)
+<img src="https://zonghaishang.github.io/images/1538296756913.png" class="pretty">
 
 这里也没什么特殊的，在`populateBean`会触发循环依赖`DeliveryOperateService`加载，这时候`earlySingletonExposure`值为true, 代表bean提前暴露。
 
 ### Step4, 在前一步触发，`DeliveryOperateService`其实会创建动态代理
 
-![image](https://zonghaishang.github.io/images/1538297025076.png)
+<img src="https://zonghaishang.github.io/images/1538297025076.png" class="pretty">
 
 循环引用会导致提前暴露`earlySingletonExposure=true`，这个时候加载的是`getEarlyBeanReference`，在里面创建spring动态代理：
 
-![image](https://zonghaishang.github.io/images/1538297199420.png)
+<img src="https://zonghaishang.github.io/images/1538297199420.png" class="pretty">
 
 在创建完动态代理后，`DeliveryOperateService`会加入`earlyProxyReferences`，后面再获取这个`bean`就不会再重复创建代理了。
 
-![image](https://zonghaishang.github.io/images/1538297380747.png)
+<img src="https://zonghaishang.github.io/images/1538297380747.png" class="pretty">
 
 到此，`DeliveryOperateService`确实会创建，并且会用在`CancelDistOrderProcessor`对应注入的字段中。
 
@@ -97,11 +97,11 @@ public class CancelDistOrderProcessor implements IComponent {
 
 因为在`CancelDistOrderProcessor`中已经触发了代理生成，所以第`Step1`中的实例不会再创建代理了。
 
-![image](https://zonghaishang.github.io/images/1538297678652.png)
+<img src="https://zonghaishang.github.io/images/1538297678652.png" class="pretty">
 
 在代码`555`会触发`dubbo AnnotationBean`进行服务暴露，但是这个不是代理实例了，但是为什么spring还是正确返回代理后的实例呢？
 
-![image](https://zonghaishang.github.io/images/1538297855578.png)
+<img src="https://zonghaishang.github.io/images/1538297855578.png" class="pretty">
 
 因为循环引用触发`earlySingletonExposure=true`, 并且在前面已经生成过动态代理了，可以直接在`getSingleton`拿到动态代理的返回了。
 

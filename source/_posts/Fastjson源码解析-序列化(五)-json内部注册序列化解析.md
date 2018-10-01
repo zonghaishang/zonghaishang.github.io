@@ -2,7 +2,7 @@
 title: Fastjson源码解析-序列化(五)-json内部注册序列化解析
 tags: [Fastjson源码解析]
 categories: [Fastjson源码解析]
-date: 2018-09-30 23:09:14
+date: 2018-09-30 23:07:14
 ---
 
 ## 序列化回调接口实现分析

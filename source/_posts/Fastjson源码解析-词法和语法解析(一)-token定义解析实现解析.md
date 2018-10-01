@@ -2,7 +2,7 @@
 title: Fastjson源码解析-词法和语法解析(一)-token定义解析
 tags: [Fastjson源码解析]
 categories: [Fastjson源码解析]
-date: 2018-09-30 23:09:14
+date: 2018-09-30 23:08:14
 ---
 
 ## 概要
