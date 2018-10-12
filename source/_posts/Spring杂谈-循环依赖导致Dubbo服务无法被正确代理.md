@@ -1,12 +1,17 @@
 ---
-title: Spring杂谈-循环依赖导致Dubbo服务无法被正确代理
+title: Dubbo无法处理Spring代理对象
+subtitle: 在阿里重启开源之前，基于`dubbo`注解的服务暴露有很多缺陷。公司小伙伴找到我帮他分析一个`dubbo`服务使用`aop`不生效的问题
+cover: /images/spring.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
 tags:
   - Spring杂谈
+  - Dubbo框架问题
 categories:
   - Spring杂谈
 date: 2018-10-01 13:17:49
 ---
-
 
 ## 背景
 

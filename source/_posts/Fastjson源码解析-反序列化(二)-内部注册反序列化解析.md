@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-反序列化(二)-内部注册反序列化解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 注册反序列化解析（十一）
+subtitle: fastjson针对常用的类型已经注册了反序列化实现方案，根据源代码注册`com.alibaba.fastjson.parser.ParserConfig#initDeserializers`可以得到列表
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+  - Fastjson源码解析
+categories:
+  - Fastjson源码解析
 date: 2018-09-30 23:12:14
 ---
 

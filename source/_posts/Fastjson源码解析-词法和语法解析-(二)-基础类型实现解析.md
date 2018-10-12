@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-词法和语法解析(二)-基础类型实现解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 词法和语法解析（八）
+subtitle:  JSONLexerBase定义并实现了json串实现解析机制的基础，在理解后面反序列化之前，我们先来看看并理解重要的属性
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:09:14
 ---
 

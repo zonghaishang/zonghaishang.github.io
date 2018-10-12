@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-反序列化(一)-反序列化解析介绍
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 反序列化解析介绍（十）
+subtitle: fastjson核心功能包括序列化和反序列化，反序列化的含义是将跨语言的json字符串转换成java对象。
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+  - Fastjson源码解析
+categories:
+  - Fastjson源码解析
 date: 2018-09-30 23:11:14
 ---
 

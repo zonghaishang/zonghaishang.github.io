@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-序列化(五)-json内部注册序列化解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 序列化（五）
+subtitle:  内部注册的序列化，fastjson针对常用的类型已经注册了序列化实现方案：
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:07:14
 ---
 

@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-序列化(六)-json特定序列化实现解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 序列化（六）
+subtitle:  序列化回调接口实现分析，主要对内部常用的序列化实现，比如MapSerializer序列化等。
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:08:14
 ---
 ## 序列化回调接口实现分析

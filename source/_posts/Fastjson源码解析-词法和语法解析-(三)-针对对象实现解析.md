@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-词法和语法解析(三)-针对对象实现解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 词法和语法解析（九）
+subtitle:  这个章节主要讨论关于对象字段相关词法解析的api，同时对于极其相似的api不冗余分析，可以参考代码阅读。
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:10:14
 ---
 

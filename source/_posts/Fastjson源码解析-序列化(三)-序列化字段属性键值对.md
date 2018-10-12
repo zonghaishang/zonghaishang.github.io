@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-序列化(三)-序列化字段属性键值对
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 序列化（三）
+subtitle:  序列化字段属性键值对，主要讲解SerializeWriter成员函数
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:05:14
 ---
 ## SerializeWriter成员函数

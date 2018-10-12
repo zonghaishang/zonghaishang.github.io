@@ -4,16 +4,49 @@
 
 # Site
 title: 诣极的博客
-subtitle:
-description:
-keywords:
-author: 诣极
-language:
+subtitle: 诣极的博客
+subtitle_desc: 拥抱开源，拥抱变化
+description: 商宗海，花名诣极，开源dubbo核心开发者之一。曾就职于阿里巴巴、金蝶中国。现就职于有赞科技，担任dubbo框架技术负责人，参与中间件开发，长期活跃在dubbo社区。
+keywords: incubator-dubbo, dubbo, 后端开发, 全栈开发, javascript, java
+
+author:
+  name: 诣极
+  link: https://github.com/zonghaishang 
+language: zh-cn
 timezone:
+introduction: 
+
+# 博客的favicon图标，支持本地及在线两种方式，本地请将图标放置于 themes/hexo-theme-skapp/source/img 目录下
+favicon_ico: 
+# 博客的左上角logo图标，支持本地及在线两种方式
+logo: /images/yiji.png
+# 头像/二维码（用于显示在底部）二选一
+avatar: 
+# 文章的默认封面
+default_cover: 
+# header 的背景图
+header_cover: /images/banner.jpeg
+# 404 页面的背景图
+error_page_bg:
+# 页面加载loading图标
+loader_img:
+
+
+menu:
+  home: /
+  archive: /archives
+  tags: /tags
+  category: /categories
+  about: https://github.com/zonghaishang
+
+about:
+  info: 诣极的博客，主要用于分享日常学习和工作的一些心得总结。
+  address: Hangzhou, Zhejiang Province, China
+  email: yiji@apache.org
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://github.com/zonghaishang
+url: https://zonghaishang.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -73,7 +106,14 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: anodyne
+# theme: anodyne
+theme: hexo-theme-skapp
+
+# Search support
+search:
+  path: search.xml
+  field: post
+  content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

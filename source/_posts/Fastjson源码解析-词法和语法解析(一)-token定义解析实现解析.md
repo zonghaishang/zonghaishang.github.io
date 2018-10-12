@@ -1,7 +1,14 @@
 ---
-title: Fastjson源码解析-词法和语法解析(一)-token定义解析
-tags: [Fastjson源码解析]
-categories: [Fastjson源码解析]
+title: 词法和语法解析（七）
+subtitle:  词法分析是反序列化的重要基础，在其他框架druid、parsii等框架都用到了词法分析的技术，个人认为在讲反序列化之前讲词法分析更重要。
+cover: /images/fastjson.jpg
+author: 
+  nick: 诣极
+  link: https://github.com/zonghaishang
+tags:
+- Fastjson源码解析
+categories:
+- Fastjson源码解析
 date: 2018-09-30 23:08:14
 ---
 
