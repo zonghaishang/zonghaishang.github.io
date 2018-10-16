@@ -1,14 +1,14 @@
 ---
 title: 源码编译openjdk8
-subtitle:  openjdk 的模块，部分使用 C/C++ 编写实现，部分使用 Java 实现。因此除了需要 C/C++ 相关编译工具外，还需要有一个 JDK (Bootstrap JDK)。编译 openjdk8 时可使用 jdk1.7 作为 Bootstrap JDK 。
+subtitle: openjdk 的模块，部分使用 C/C++ 编写实现，部分使用 Java 实现。因此除了需要 C/C++ 相关编译工具外，还需要有一个 JDK (Bootstrap JDK)。编译 openjdk8 时可使用jdk1.7 作为 Bootstrap JDK 。
 cover: /images/jdk.jpg
 author: 
   nick: 诣极
   link: https://github.com/zonghaishang
 tags:
-- OpenJDK
+ - OpenJDK
 categories:
-- OpenJDK
+ - OpenJDK
 date: 2018-09-30 23:00:19
 ---
 
