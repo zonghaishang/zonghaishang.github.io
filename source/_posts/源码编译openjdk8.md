@@ -6,9 +6,9 @@ author:
   nick: 诣极
   link: https://github.com/zonghaishang
 tags:
- - OpenJDK
+ - jvm, openjdk
 categories:
- - OpenJDK
+ - jvm
 date: 2018-09-30 23:00:19
 ---
 
