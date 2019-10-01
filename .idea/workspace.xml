@@ -1,65 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f70665c3-2a35-4cbc-a6d4-fdbce509e83d" name="Default Changelist" comment="compile resource.">
-      <change beforePath="$PROJECT_DIR$/.deploy_git" beforeDir="false" afterPath="$PROJECT_DIR$/.deploy_git" afterDir="false" />
+    <list default="true" id="f70665c3-2a35-4cbc-a6d4-fdbce509e83d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-反序列化(一)-反序列化解析介绍/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-反序列化(一)-反序列化解析介绍/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-反序列化(二)-内部注册反序列化解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-反序列化(二)-内部注册反序列化解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(一)-序列化基础类型解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(一)-序列化基础类型解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(三)-序列化字段属性键值对/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(三)-序列化字段属性键值对/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(二)-序列化字节和字符串解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(二)-序列化字节和字符串解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(五)-json内部注册序列化解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(五)-json内部注册序列化解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(六)-json特定序列化实现解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(六)-json特定序列化实现解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(四)-json序列化实现解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-序列化(四)-json序列化实现解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析(一)-token定义解析实现解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析(一)-token定义解析实现解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析-(三)-针对对象实现解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析-(三)-针对对象实现解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析-(二)-基础类型实现解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/Fastjson源码解析-词法和语法解析-(二)-基础类型实现解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/09/30/源码编译openjdk8/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/09/30/源码编译openjdk8/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/10/01/Spring杂谈-循环依赖导致Dubbo服务无法被正确代理/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/10/01/Spring杂谈-循环依赖导致Dubbo服务无法被正确代理/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/10/01/诣极的工作经历/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/10/01/诣极的工作经历/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/10/22/理解字节码原理/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/10/22/理解字节码原理/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/10/26/Ubuntu18.0.4.1编译openjdk8/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/10/26/Ubuntu18.0.4.1编译openjdk8/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/2018/10/26/理解arthas原理/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/2018/10/26/理解arthas原理/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/2018/09/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/2018/09/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/2018/09/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/2018/09/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/2018/10/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/2018/10/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/2018/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/2018/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/2018/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/2018/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/archives/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/archives/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/lunr/2018.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/lunr/2018.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/lunr/all.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/lunr/all.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/atom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/Fastjson源码解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/Fastjson源码解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/Fastjson源码解析/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/Fastjson源码解析/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/Spring杂谈/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/Spring杂谈/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/arthas/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/arthas/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/asm/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/asm/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/jvm/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/jvm/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/categories/工作经历/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/categories/工作经历/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/search/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/search/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/sitemap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/sitemap.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/Dubbo框架问题/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/Dubbo框架问题/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/Fastjson源码解析/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/Fastjson源码解析/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/Fastjson源码解析/page/2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/Fastjson源码解析/page/2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/Spring杂谈/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/Spring杂谈/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/arthas/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/arthas/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/asm/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/asm/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/jvm-openjdk/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/jvm-openjdk/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/jvm/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/jvm/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/openjdk/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/openjdk/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tags/工作经历/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/tags/工作经历/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/诣极的工作经历.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/诣极的工作经历.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/images/jmj.png" beforeDir="false" afterPath="$PROJECT_DIR$/source/images/jmj.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/source/_posts/诣极的工作经历.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="187">
+              <first_editor relative-caret-position="172">
                 <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
               </first_editor>
               <second_editor />
@@ -115,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="8" column="126" selection-start-line="8" selection-start-column="126" selection-end-line="8" selection-end-column="126" />
+            <state>
+              <caret line="82" selection-start-line="82" selection-end-line="82" />
             </state>
           </provider>
         </entry>
@@ -150,9 +94,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="203" />
+    <option name="x" value="331" />
     <option name="y" value="23" />
-    <option name="width" value="1237" />
+    <option name="width" value="1109" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -274,7 +218,7 @@
       <workItem from="1538472060537" duration="4000" />
       <workItem from="1538964911575" duration="109000" />
       <workItem from="1569773753086" duration="2097000" />
-      <workItem from="1569775988760" duration="2467000" />
+      <workItem from="1569775988760" duration="2983000" />
     </task>
     <task id="LOCAL-00001" summary="更新简历">
       <created>1537250368689</created>
@@ -332,17 +276,23 @@
       <option name="project" value="LOCAL" />
       <updated>1569776101945</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="update readme.">
+      <created>1569903956360</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1569903956360</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8760000" />
+    <option name="totallyTimeSpent" value="9276000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="203" y="23" width="1237" height="877" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25606695" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25606695" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -358,7 +308,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.339895" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="IvyIDEA" order="10" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.5464968" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.6140127" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5007153" side_tool="true" weight="0.31847134" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="13" />
       <window_info anchor="bottom" id="CheckStyle" order="14" />
@@ -391,9 +341,9 @@
     <MESSAGE value="更新圆角图片" />
     <MESSAGE value="保存uml原图材料" />
     <MESSAGE value="update local changes." />
-    <MESSAGE value="update readme." />
     <MESSAGE value="compile resource." />
-    <option name="LAST_COMMIT_MESSAGE" value="compile resource." />
+    <MESSAGE value="update readme." />
+    <option name="LAST_COMMIT_MESSAGE" value="update readme." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/themes/anodyne/source/css/partial/_content.styl">
@@ -439,7 +389,7 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/诣极的工作经历.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="187">
+          <first_editor relative-caret-position="172">
             <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           </first_editor>
           <second_editor />
@@ -448,8 +398,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="8" column="126" selection-start-line="8" selection-start-column="126" selection-end-line="8" selection-end-column="126" />
+        <state>
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
         </state>
       </provider>
     </entry>
