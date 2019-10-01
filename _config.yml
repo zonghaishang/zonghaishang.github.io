@@ -6,7 +6,7 @@
 title: 诣极的博客
 subtitle: 诣极的博客
 subtitle_desc: 拥抱开源，拥抱变化
-description: 商宗海，花名诣极，开源dubbo核心开发者之一。曾就职于阿里巴巴、金蝶中国。现就职于有赞科技，担任dubbo框架技术负责人，参与中间件开发，长期活跃在dubbo社区。
+description: 花名诣极，开源Apache Dubbo PMC。曾就职于阿里巴巴集团、有赞科技，担任dubbo框架技术负责人。目前就职于蚂蚁金服中间件团队，主攻rpc和Service mesh方向。 ''深入理解Apache Dubbo与实战''图书作者。
 keywords: incubator-dubbo, dubbo, 后端开发, 全栈开发, javascript, java
 
 author:
@@ -22,6 +22,7 @@ favicon_ico:
 logo: /images/yiji.png
 # 头像/二维码（用于显示在底部）二选一
 avatar: /images/jmj.png
+qrcode: /images/jmj.png
 # 文章的默认封面
 default_cover: 
 # header 的背景图
