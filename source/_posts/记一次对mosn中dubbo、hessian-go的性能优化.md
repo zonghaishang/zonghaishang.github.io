@@ -1,6 +1,6 @@
 ---
-title: 理解Java字节码原理
-subtitle:  为什么要学习字节码技术？无论是Java程序员还是架构师，在我们平常使用的中间件，dubbo、fastjson和arthas等框架或者组件时，我们已经在接触字节码技术了，更重要的是，Java字节码恰恰是JVM的基础。
+title: 记一次对mosn中dubbo、hessian-go的性能优化
+subtitle:  蚂蚁内部对 service mesh 的稳定性和性能要求是比较高的，内部mosn 广泛用于生产环境。在云上和开源社区，RPC 领域dubbo和spring cloud 同样广泛用于生产环境，我们在 mosn 基础上，支持了 dubbo 和 spring cloud 流量代理。我们发现在支持 dubbo 协议过程中，经过 mesh 流量代理后，性能有非常大的性能损耗，在大商户落地mesh中也对性能有较高要求，因此本文会重点描述在基于 Go 语言库 [dubbo-go-hessian2](https://github.com/apache/dubbo-go-hessian2) 、dubbo协议中对[mosn](https://github.com/mosn/mosn)所做的性能优化。
 cover: /images/go.jpg
 author: 
   nick: 诣极
