@@ -119,9 +119,9 @@
       
         <tags>
             
-            <tag> jvm </tag>
-            
             <tag> arthas </tag>
+            
+            <tag> jvm </tag>
             
             <tag> asm </tag>
             
